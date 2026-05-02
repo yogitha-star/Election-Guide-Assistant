@@ -48,8 +48,18 @@ Election-Guide-Assistant/
    ```
 5. **Access the App**: Open your browser and go to `http://127.0.0.1:5000/`.
 
-## Example Usage
-1. Open the app and click the "How to vote" suggestion button.
-2. The bot will list the steps and ask a follow-up question: "Do you have a voter ID?"
-3. Type "Yes" or "No". The bot will guide you to your next specific steps based on your answer.
-4. Try toggling the language dropdown to "Telugu" and asking questions!
+## Google Services Integration
+- Google Cloud App Engine (Deployment)
+- Google Antigravity (Development Platform)
+- Designed for integration with Google Gemini API
+
+## Testing
+Basic testing implemented using pytest:
+- Home page test
+- Chat response test
+- Empty input handling
+- Unknown query handling
+
+## Efficiency
+- Lightweight rule-based NLP
+- Caching used for faster responses
