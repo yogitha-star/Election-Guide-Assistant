@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Guide Assistant</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="light-mode">
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="icon">🗳️</span>
+                    <h1>Election Guide Assistant</h1>
+                </div>
+                <div class="header-controls">
+                    <select id="language-select" class="lang-dropdown">
+                        <option value="english">English</option>
+                        <option value="telugu">Telugu</option>
+                    </select>
+                    <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+                        <span class="sun-icon">☀️</span>
+                        <span class="moon-icon" style="display:none;">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <!-- Initial Welcome Message -->
+                <div class="message bot-message">
+                    <div class="message-content">
+                        Hello! 👋 I'm your Election Guide Assistant. How can I help you today?
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Suggestions Container -->
+            <div class="quick-suggestions" id="quick-suggestions">
+                <button class="suggestion-btn" data-query="How to vote">How to vote</button>
+                <button class="suggestion-btn" data-query="What is voter ID">What is voter ID</button>
+                <button class="suggestion-btn" data-query="Election process">Election process</button>
+                <button class="suggestion-btn" data-query="Registration steps">Registration steps</button>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
+                <button id="send-btn" class="send-btn" aria-label="Send message">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
