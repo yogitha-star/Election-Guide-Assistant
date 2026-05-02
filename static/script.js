@@ -2,25 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.getElementById('chat-messages');
     const userInput = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
-    const themeToggle = document.getElementById('theme-toggle');
     const langSelect = document.getElementById('language-select');
     const suggestionBtns = document.querySelectorAll('.suggestion-btn');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
-
-    // Theme Toggle Logic
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        document.body.classList.toggle('light-mode');
-        
-        if (document.body.classList.contains('dark-mode')) {
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'inline';
-        } else {
-            sunIcon.style.display = 'inline';
-            moonIcon.style.display = 'none';
-        }
-    });
+    
+    // Mobile Sidebar Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('sidebar');
+    if (mobileMenuBtn && sidebar) {
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+    }
 
     // Auto-scroll to bottom of chat
     const scrollToBottom = () => {
@@ -33,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msgDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
         
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'message-content';
+        contentDiv.className = 'message-card';
         contentDiv.textContent = text;
         
         msgDiv.appendChild(contentDiv);
@@ -51,13 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
         `;
-        chatMessages.appendChild(typingDiv);
+        
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message bot-message';
+        msgDiv.id = 'typing-container';
+        msgDiv.appendChild(typingDiv);
+
+        chatMessages.appendChild(msgDiv);
         scrollToBottom();
     };
 
     // Remove typing indicator
     const removeTypingIndicator = () => {
-        const indicator = document.getElementById('typing-indicator');
+        const indicator = document.getElementById('typing-container');
         if (indicator) {
             indicator.remove();
         }
@@ -70,6 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 1. Show user message
         addMessage(messageText, true);
         userInput.value = '';
+        
+        // Close sidebar if on mobile after clicking a suggestion
+        if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+        }
         
         // 2. Show typing indicator
         showTypingIndicator();
@@ -88,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             
-            // Artificial delay to make typing animation visible and feel more "human"
+            // Artificial delay
             setTimeout(() => {
                 removeTypingIndicator();
                 if (data.response) {
@@ -116,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Event Listeners for suggestion buttons
+    // Event Listeners for suggestion buttons (sidebar and bottom)
     suggestionBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const query = btn.getAttribute('data-query');
